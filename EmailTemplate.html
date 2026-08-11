@@ -7,96 +7,110 @@
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f4;">
 
-    <!-- Email Container Table -->
-    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; margin: 20px auto; border: 1px solid #e0e0e0; font-family: Arial, Helvetica, sans-serif;">
-        <tbody>
-            <!-- Dynamic Header Image Section -->
-            <? if (headerImage) { ?>
-            <tr>
-                <td align="center" style="padding: 10px 0;">
-                    <img src="cid:headerImage" alt="Shri Adinath Jinalaya Banner" style="max-width: 100%; height: auto; display: block;" border="0">
-                </td>
-            </tr>
+<!-- Email Container Table -->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; margin: 20px auto; border: 1px solid #e0e0e0; font-family: Arial, Helvetica, sans-serif;">
+    <tbody>
+    <!-- Dynamic Header Image Section -->
+    <? if (headerImage) { ?>
+    <tr>
+        <td align="center" style="padding: 10px 0;">
+            <img src="cid:headerImage" alt="Shri Adinath Jinalaya Banner" style="max-width: 100%; height: auto; display: block;" border="0">
+        </td>
+    </tr>
+    <? } ?>
+
+    <!-- Message Body Section -->
+    <tr>
+        <td style="font-family: calibri, arial, helvetica, sans-serif; font-size: 16px; color: rgb(24,24,24); padding: 20px 15px 12px; text-align: justify;" align="left">
+            <div style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
+                <span style="line-height: 15.2px; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">Dear <?= recipientName ?>,</span>
+            </div>
+            <div><span style="font-family: Arial, Helvetica, sans-serif; font-size: 10pt; line-height: 15.2px; color: rgb(34,34,34); text-align: start;"><br></span></div>
+            <div><span style="font-family: Arial, Helvetica, sans-serif; font-size: 10pt; line-height: 15.2px; color: rgb(34,34,34); text-align: start;">Jai Jinendra,&nbsp;</span><br></div>
+
+            <!-- Conditional Message Body -->
+            <? if (isKid) { ?>
+            <!-- Kid's Birthday Wording -->
+            <p style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">
+                    On this Special Day, wishing <?= childName ?> all the best in the year to come.<br>
+                    May <?= pronounPossessive ?> days be filled with joy and may <?= pronounSubject ?> be blessed with health and happiness throughout the year.<br><br>Wishing <?= pronounObject ?> a wonderful&nbsp;
+                </span>
+                <b style="color: rgb(69,69,69); font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
+                    <span style="font-size: 10pt; line-height: 15.2px; color: rgb(192,0,0);">
+                        <span style="color: rgb(54,99,136); border-bottom: 2px dotted rgb(54,99,136);">HAPPY BIRTHDAY</span>
+                    </span>
+                </b>
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">&nbsp;and may all yours and <?= pronounPossessive ?> wishes and dreams turn to reality…</span>
+            </p>
+            <? } else if (subject && subject.toLowerCase().indexOf('anniversary') !== -1) { ?>
+            <!-- Anniversary Wording -->
+            <p style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">
+                    Best Wishes to you both on your Anniversary Day and throughout the coming year.<br><br>Have a wonderful&nbsp;
+                </span>
+                <b style="color: rgb(69,69,69); font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
+                    <span style="font-size: 10pt; line-height: 15.2px; color: rgb(192,0,0);">
+                        <span style="color: rgb(54,99,136); border-bottom: 2px dotted rgb(54,99,136);">HAPPY ANNIVERSARY</span>
+                    </span>
+                </b>
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">&nbsp;blessed with Joy, Health and Happiness.</span>
+            </p>
+            <? } else if (subject && subject.toLowerCase().indexOf('birthday') !== -1) { ?>
+            <!-- Adult Birthday Wording -->
+            <p style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">
+                    On this Special Day, wishing you all the best in the year to come.<br>
+                    May your days be filled with joy and may you be blessed with health and happiness throughout the year.<br><br>Have a wonderful&nbsp;
+                </span>
+                <b style="color: rgb(69,69,69); font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
+                    <span style="font-size: 10pt; line-height: 15.2px; color: rgb(192,0,0);">
+                        <span style="color: rgb(54,99,136); border-bottom: 2px dotted rgb(54,99,136);">HAPPY BIRTHDAY</span>
+                    </span>
+                </b>
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">&nbsp;and may all your wishes and dreams turn to reality…</span>
+            </p>
             <? } ?>
 
-            <!-- Message Body Section -->
-            <tr>
-                <td style="font-family: calibri, arial, helvetica, sans-serif; font-size: 16px; color: rgb(24,24,24); padding: 20px 15px 12px; text-align: justify;" align="left">
-                    <div style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
-                        <span style="line-height: 15.2px; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">Dear <?= recipientName ?>,</span>
-                    </div>
-                    <div><span style="font-family: Arial, Helvetica, sans-serif; font-size: 10pt; line-height: 15.2px; color: rgb(34,34,34); text-align: start;"><br></span></div>
-                    <div><span style="font-family: Arial, Helvetica, sans-serif; font-size: 10pt; line-height: 15.2px; color: rgb(34,34,34); text-align: start;">Jai Jinendra,&nbsp;</span><br></div>
-                    
-                    <!-- Conditional Message Body -->
-                    <? if (subject && subject.toLowerCase().indexOf('anniversary') !== -1) { ?>
-                        <!-- Anniversary Wording -->
-                        <p style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
-                            <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">
-                                Best Wishes to you both on your Anniversary Day and throughout the coming year.<br><br>Have a wonderful&nbsp;
-                            </span>
-                            <b style="color: rgb(69,69,69); font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
-                                <span style="font-size: 10pt; line-height: 15.2px; color: rgb(192,0,0);">
-                                    <span style="color: rgb(54,99,136); border-bottom: 2px dotted rgb(54,99,136);">HAPPY ANNIVERSARY</span>
-                                </span>
-                            </b>
-                            <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">&nbsp;blessed with Joy, Health and Happiness.</span>
-                        </p>
-                    <? } else if (subject && subject.toLowerCase().indexOf('birthday') !== -1) { ?>
-                        <!-- Birthday Wording -->
-                        <p style="color: rgb(34,34,34); font-family: arial, sans-serif; text-align: start; font-size: 13px;">
-                            <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">
-                                On this Special Day, wishing you all the best in the year to come.<br>
-                                May your days be filled with joy and may you be blessed with health and happiness throughout the year.<br><br>Have a wonderful&nbsp;
-                            </span>
-                            <b style="color: rgb(69,69,69); font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
-                                <span style="font-size: 10pt; line-height: 15.2px; color: rgb(192,0,0);">
-                                    <span style="color: rgb(54,99,136); border-bottom: 2px dotted rgb(54,99,136);">HAPPY BIRTHDAY</span>
-                                </span>
-                            </b>
-                            <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;">&nbsp;and may all your wishes and dreams turn to reality…</span>
-                        </p>
-                    <? } ?>
+            <? if (!leadFlag || String(leadFlag).toUpperCase().trim() !== 'N') { ?>
+            <div style="color: rgb(34,34,34); font-family: arial, sans-serif; font-size: 12.8px; text-align: start;">
+                <span style="font-size: 12.8px;">Also we request you to lead our Weekly <? if (hideAbhishek) { ?>Pooja<? } else { ?>Abhishek and Pooja<? } ?> on <?= eventDate ?> to celebrate this special day.</span><br>
+            </div>
+            <? } ?>
+            <div style="color: rgb(34,34,34); font-family: arial, sans-serif; font-size: 12.8px; text-align: start;">
+                <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;"><br>From all of us at Shri Adinath Jinalya - JCA</span>
+            </div>
+        </td>
+    </tr>
 
-                    <? if (!leadFlag || leadFlag.toLowerCase().indexOf('n') === -1) { ?>
-                    <div style="color: rgb(34,34,34); font-family: arial, sans-serif; font-size: 12.8px; text-align: start;">
-                        <span style="font-size: 12.8px;">Also we request you to lead our Weekly Abhishek and Pooja on <?= eventDate ?> to celebrate this special day.</span><br>
-                    </div>
-                    <? } ?>
-                    <div style="color: rgb(34,34,34); font-family: arial, sans-serif; font-size: 12.8px; text-align: start;">
-                        <span style="font-size: 10pt; line-height: 15.2px; font-family: Arial, Helvetica, sans-serif;"><br>From all of us at Shri Adinath Jinalya - JCA</span>
-                    </div>
-                </td>
-            </tr>
+    <!-- Contact Information Section -->
+    <tr>
+        <td style="padding: 0px 15px 7px; text-align: justify;" align="left">
+            <img src="https://ci3.googleusercontent.com/meips/ADKq_NZVZetvINZO1id1UdARw9tUHJVAjdOuk3Q4mrXUUy9jBweUhw_jOuxuz_iFX_d0LwZfijrb4hhEgsA-Ww1Po3gbHxG0cI3MBrXjHlaVu589XL2Hntiy5XVIFWAR2rVUJrVMiJq4=s0-d-e1-ft#http://www.nyjaincenter.org/Emailers/2016/Shri_Adinath_Jinalaya/social_icon.png" alt="Jain Center Of America" title="Jain Center Of America" style="display:block" border="0" class="CToWUd" data-bit="iit">
+            <b style="color: rgb(24,24,24); font-family: calibri, arial, helvetica, sans-serif; font-size: 16px;">Shri Adinath Jinalaya</b><br>
+            <font face="calibri, arial, helvetica, sans-serif" color="#181818">Jain Center of America,</font><br>
+            <font face="calibri, arial, helvetica, sans-serif" color="#181818">43-11 Ithaca Street,</font><br>
+            <font face="calibri, arial, helvetica, sans-serif" color="#181818">Elmhurst, NY 11373</font><br>
+            <font face="calibri, arial, helvetica, sans-serif" color="#181818">Tel : 718-478-9141</font><br>
+            <a href="mailto:adinathjinalya.nyc@gmail.com" style="color: rgb(24,24,24); font-family: calibri, arial, helvetica, sans-serif; font-size: 16px; text-decoration: none;" target="_blank">Email : adinathjinalya.nyc@gmail.com</a><br>
+        </td>
+    </tr>
 
-            <!-- Contact Information Section -->
-            <tr>
-                <td style="padding: 0px 15px 7px; text-align: justify;" align="left">
-                    <img src="https://ci3.googleusercontent.com/meips/ADKq_NZVZetvINZO1id1UdARw9tUHJVAjdOuk3Q4mrXUUy9jBweUhw_jOuxuz_iFX_d0LwZfijrb4hhEgsA-Ww1Po3gbHxG0cI3MBrXjHlaVu589XL2Hntiy5XVIFWAR2rVUJrVMiJq4=s0-d-e1-ft#http://www.nyjaincenter.org/Emailers/2016/Shri_Adinath_Jinalaya/social_icon.png" alt="Jain Center Of America" title="Jain Center Of America" style="display:block" border="0" class="CToWUd" data-bit="iit">
-                    <b style="color: rgb(24,24,24); font-family: calibri, arial, helvetica, sans-serif; font-size: 16px;">Shri Adinath Jinalaya</b><br>
-                    <font face="calibri, arial, helvetica, sans-serif" color="#181818">Jain Center of America,</font><br>
-                    <font face="calibri, arial, helvetica, sans-serif" color="#181818">43-11 Ithaca Street,</font><br>
-                    <font face="calibri, arial, helvetica, sans-serif" color="#181818">Elmhurst, NY 11373</font><br>
-                    <font face="calibri, arial, helvetica, sans-serif" color="#181818">Tel : 718-478-9141</font><br>
-                    <a href="mailto:adinathjinalya.nyc@gmail.com" style="color: rgb(24,24,24); font-family: calibri, arial, helvetica, sans-serif; font-size: 16px; text-decoration: none;" target="_blank">Email : adinathjinalya.nyc@gmail.com</a><br>
-                </td>
-            </tr>
+    <!-- Social / WhatsApp Link Section -->
+    <tr>
+        <td style="padding: 0px 15px 7px;">
+            <a href="https://chat.whatsapp.com/KTucROWzTLW4s6fSoalnup" target="_blank" style="font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #075e54; text-decoration: underline;">JOIN US ON WHATSAPP</a>
+        </td>
+    </tr>
 
-            <!-- Social / WhatsApp Link Section -->
-            <tr>
-                <td style="padding: 0px 15px 7px;">
-                    <a href="https://chat.whatsapp.com/KTucROWzTLW4s6fSoalnup" target="_blank" style="font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #075e54; text-decoration: underline;">JOIN US ON WHATSAPP</a>
-                </td>
-            </tr>
-
-            <!-- Footer / Whitelist Note Section -->
-            <tr>
-                <td style="font-family: calibri, arial, helvetica, sans-serif; font-size: 16px; color: rgb(24,24,24); padding: 0px 15px 20px; text-align: justify;" align="left">
-                    Please add&nbsp;<span><a href="mailto:adinathjinalya.nyc@gmail.com" target="_blank">adinathjinalya.nyc@gmail.com</a></span>&nbsp;to your contacts to ensure emails from Shri Adinath Jinalaya, JCA, New York are delivered in your inbox.<br><br>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Footer / Whitelist Note Section -->
+    <tr>
+        <td style="font-family: calibri, arial, helvetica, sans-serif; font-size: 16px; color: rgb(24,24,24); padding: 0px 15px 20px; text-align: justify;" align="left">
+            Please add&nbsp;<span><a href="mailto:adinathjinalya.nyc@gmail.com" target="_blank">adinathjinalya.nyc@gmail.com</a></span>&nbsp;to your contacts to ensure emails from Shri Adinath Jinalaya, JCA, New York are delivered in your inbox.<br><br>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

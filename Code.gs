@@ -5,8 +5,8 @@ function sendDateBasedEmails() {
 
   if (numRows < 1) return;
 
-  // Read 7 columns (A to G: Name, Email, Date, Subject, Status, TimeZone, LeadFlag)
-  const dataRange = sheet.getRange(startRow, 1, numRows, 7);
+  // Read 10 columns (A to J)
+  const dataRange = sheet.getRange(startRow, 1, numRows, 10);
   const data = dataRange.getValues();
   const currentYear = new Date().getFullYear();
 
@@ -33,11 +33,17 @@ function sendDateBasedEmails() {
     const rawTimeZone = String(row[5]).trim().toUpperCase();
     const leadFlag = row[6];
 
+    // Columns H, I, J
+    const isKidFlag = String(row[7]).trim().toUpperCase();
+    const isKid = isKidFlag === "Y" || isKidFlag === "YES";
+    const childName = String(row[8]).trim();
+    const gender = String(row[9]).trim().toUpperCase(); // 'F' or 'M'
+
     if (!email || !rawDate || status === "Sent") continue;
 
     const targetTimeZone = tzMapping[rawTimeZone] || rawTimeZone || "Asia/Kolkata";
 
-    // Check if it is 9 AM in target timezone
+    // Check execution hour (8 AM in target timezone)
     const nowInTargetTz = new Date();
     const currentHourInTargetTz = Number(Utilities.formatDate(nowInTargetTz, targetTimeZone, "HH"));
 
@@ -45,30 +51,46 @@ function sendDateBasedEmails() {
       continue;
     }
 
-    // Safely extract Month and Day in target timezone
+    // Extract Month and Day in target timezone
     const eventDateObj = new Date(rawDate);
     const todayMonthDay = Utilities.formatDate(nowInTargetTz, targetTimeZone, "MM-dd");
     const rowMonthDay = Utilities.formatDate(eventDateObj, targetTimeZone, "MM-dd");
 
     if (rowMonthDay === todayMonthDay) {
-      // Parse Month and Day reliably using target timezone strings to prevent UTC offset shift
       const monthStr = Utilities.formatDate(eventDateObj, targetTimeZone, "MM");
       const dayStr = Utilities.formatDate(eventDateObj, targetTimeZone, "dd");
 
-      // Construct target date at 12:00 PM to avoid daylight saving time boundary shifts
       const currentYearEventDate = new Date(currentYear, Number(monthStr) - 1, Number(dayStr), 12, 0, 0);
 
-      // Calculate days until next Sunday (0 = Sun, 1 = Mon, ..., 6 = Sat)
+      // Calculate upcoming Sunday
       const dayOfWeek = currentYearEventDate.getDay();
-      
-      // If today is Sunday (0), (7 - 0) % 7 = 0 (same day). 
-      // Use (7 - dayOfWeek) % 7 to stay on same day if Sunday, or change to ((7 - dayOfWeek) || 7) to force next Sunday.
-      const daysUntilSunday = (7 - dayOfWeek) % 7; 
+      const daysUntilSunday = (7 - dayOfWeek) % 7;
 
       const nextSunday = new Date(currentYearEventDate);
       nextSunday.setDate(currentYearEventDate.getDate() + daysUntilSunday);
 
       const formattedEventDate = Utilities.formatDate(nextSunday, targetTimeZone, "EEEE, MMMM d, yyyy");
+
+      // Set pronouns based on Gender
+      let pronounSubject = "they";
+      let pronounObject = "them";
+      let pronounPossessive = "their";
+
+      const isFemale = gender === "F" || gender === "GIRL" || gender === "FEMALE";
+      const isMale = gender === "M" || gender === "BOY" || gender === "MALE";
+
+      if (isFemale) {
+        pronounSubject = "she";
+        pronounObject = "her";
+        pronounPossessive = "her";
+      } else if (isMale) {
+        pronounSubject = "he";
+        pronounObject = "him";
+        pronounPossessive = "his";
+      }
+
+      // Check condition: Hide "Abhishek and " if NOT a kid and female
+      const hideAbhishek = !isKid && isFemale;
 
       // Load and evaluate HTML Template
       const template = HtmlService.createTemplateFromFile('EmailTemplate');
@@ -77,6 +99,14 @@ function sendDateBasedEmails() {
       template.subject = subject;
       template.leadFlag = leadFlag;
       template.headerImage = true;
+
+      // Kid & Gender dynamic parameters
+      template.isKid = isKid;
+      template.childName = childName;
+      template.pronounSubject = pronounSubject;
+      template.pronounObject = pronounObject;
+      template.pronounPossessive = pronounPossessive;
+      template.hideAbhishek = hideAbhishek;
 
       const htmlBody = template.evaluate().getContent();
 
