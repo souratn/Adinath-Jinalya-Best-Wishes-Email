@@ -14,14 +14,18 @@ function sendDateBasedEmails() {
   const imageFileId = "1ytp3XYrGVLD6zhgs5SJpD64F-mhTi-2t";
   const imageBlob = DriveApp.getFileById(imageFileId).getBlob().setName("headerImage");
 
-  // Map user inputs to IANA Timezone Identifiers
+  // Map user inputs to valid IANA Timezone Identifiers
   const tzMapping = {
     "IST": "Asia/Kolkata",
     "EST": "America/New_York",
     "EDT": "America/New_York",
     "CST": "America/Chicago",
-    "PST": "America/Los_Angeles"
+    "CDT": "America/Chicago",
+    "PST": "America/Los_Angeles",
+    "PDT": "America/Los_Angeles"
   };
+
+  const now = new Date();
 
   for (let i = 0; i < data.length; i++) {
     const row = data[i];
@@ -43,17 +47,26 @@ function sendDateBasedEmails() {
 
     const targetTimeZone = tzMapping[rawTimeZone] || rawTimeZone || "Asia/Kolkata";
 
-    // Check execution hour (8 AM in target timezone)
-    const nowInTargetTz = new Date();
-    const currentHourInTargetTz = Number(Utilities.formatDate(nowInTargetTz, targetTimeZone, "HH"));
+    // Get exact current hour and formatted date in the target time zone
+    const currentHourInTargetTz = Number(Utilities.formatDate(now, targetTimeZone, "HH"));
 
+    // Check execution hour (8 AM in target timezone)
     if (currentHourInTargetTz !== 8) {
       continue;
     }
 
-    // Extract Month and Day in target timezone
-    const eventDateObj = new Date(rawDate);
-    const todayMonthDay = Utilities.formatDate(nowInTargetTz, targetTimeZone, "MM-dd");
+    // Compare Month-Day in the target timezone
+    const todayMonthDay = Utilities.formatDate(now, targetTimeZone, "MM-dd");
+
+    // Parse input rawDate properly to avoid UTC conversion shifts
+    let eventDateObj;
+    if (rawDate instanceof Date) {
+      eventDateObj = rawDate;
+    } else {
+      // Fallback for text strings like 'YYYY-MM-DD' or 'MM/DD/YYYY'
+      eventDateObj = new Date(rawDate);
+    }
+
     const rowMonthDay = Utilities.formatDate(eventDateObj, targetTimeZone, "MM-dd");
 
     if (rowMonthDay === todayMonthDay) {
